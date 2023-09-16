@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_architecture/res/components/round-button.dart';
 import 'package:mvvm_architecture/utils/routes/routes-name.dart';
+import 'package:mvvm_architecture/view-model/auth-view-model.dart';
 import 'package:mvvm_architecture/view/home-screen.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/utils.dart';
 
@@ -30,6 +32,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final authViewModel = Provider.of<AuthViewModel>(context);
     final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
         body: SafeArea(
@@ -78,16 +81,21 @@ class _LoginViewState extends State<LoginView> {
           ),
           RoundButton(
               title: "Login",
+              loading: authViewModel.loading,
               onPress: () {
                 if (_emailController.text.isEmpty) {
                   Utils.flushBarErrorMessage("please enter email", context);
-                } else if (_passwordController.toString().isEmpty) {
+                } else if (_passwordController.text.isEmpty) {
                   Utils.flushBarErrorMessage("please enter password", context);
                 } else if (_passwordController.text.length < 6) {
                   Utils.flushBarErrorMessage(
                       "Password must be 6 character or longer", context);
                 } else {
-                  print("api hit");
+                  Map data = {
+                    "email": _emailController.text.toString(),
+                    'password': _passwordController.text.toString(),
+                  };
+                  authViewModel.loginApi(data, context);
                 }
               })
         ],
