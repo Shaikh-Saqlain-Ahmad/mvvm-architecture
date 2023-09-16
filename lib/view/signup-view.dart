@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm_architecture/res/components/round-button.dart';
 import 'package:mvvm_architecture/utils/routes/routes-name.dart';
-import 'package:mvvm_architecture/view-model/auth-view-model.dart';
-import 'package:mvvm_architecture/view/home-screen.dart';
 import 'package:provider/provider.dart';
 
+import '../res/components/round-button.dart';
 import '../utils/utils.dart';
+import '../view-model/auth-view-model.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class SignupView extends StatefulWidget {
+  const SignupView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<SignupView> createState() => _SignupViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _SignupViewState extends State<SignupView> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   FocusNode emailFocusNode = FocusNode();
@@ -80,8 +79,8 @@ class _LoginViewState extends State<LoginView> {
             height: height * 0.085,
           ),
           RoundButton(
-              title: "Login",
-              loading: authViewModel.loading,
+              title: "Sign up",
+              loading: authViewModel.singuploading,
               onPress: () {
                 if (_emailController.text.isEmpty) {
                   Utils.flushBarErrorMessage("please enter email", context);
@@ -95,7 +94,7 @@ class _LoginViewState extends State<LoginView> {
                     "email": _emailController.text.toString(),
                     'password': _passwordController.text.toString(),
                   };
-                  authViewModel.loginApi(data, context);
+                  authViewModel.registerApi(data, context);
                 }
               }),
           SizedBox(
@@ -103,9 +102,9 @@ class _LoginViewState extends State<LoginView> {
           ),
           InkWell(
               onTap: () {
-                Navigator.pushNamed(context, RoutesName.signup);
+                Navigator.pushNamed(context, RoutesName.login);
               },
-              child: Text("Don't have an account? Sign up"))
+              child: Text("Already have an account? Login"))
         ],
       ),
     ));
