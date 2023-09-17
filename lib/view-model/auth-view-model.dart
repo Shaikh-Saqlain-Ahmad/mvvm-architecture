@@ -26,39 +26,30 @@ class AuthViewModel with ChangeNotifier {
   Future<void> loginApi(dynamic data, BuildContext context) async {
     setLoading(true);
     _myrepo.loginApi(data).then((value) {
-      if (kDebugMode) {
-        setLoading(false);
-        final userPreference =
-            Provider.of<UserViewModel>(context, listen: false);
-        userPreference.saveUser(UserModel(token: value['token'].toString()));
-        Utils.toastmessage("Login successful");
-        print(value.toString());
-        Navigator.pushNamed(context, RoutesName.home);
-      }
+      setLoading(false);
+      final userPreference = Provider.of<UserViewModel>(context, listen: false);
+      userPreference.saveUser(UserModel(token: value['token'].toString()));
+      Utils.toastmessage("Login successful");
+      print(value.toString());
+      Navigator.pushNamed(context, RoutesName.home);
     }).onError((error, stackTrace) {
-      if (kDebugMode) {
-        setLoading(false);
-        Utils.flushBarErrorMessage(error.toString(), context);
-        print(error.toString());
-      }
+      setLoading(false);
+      Utils.flushBarErrorMessage(error.toString(), context);
+      print(error.toString());
     });
   }
 
   Future<void> registerApi(dynamic data, BuildContext context) async {
     setsignupLoading(true);
     _myrepo.registerApi(data).then((value) {
-      if (kDebugMode) {
-        setsignupLoading(false);
-        Utils.toastmessage("Sign up successful");
-        print(value.toString());
-        Navigator.pushNamed(context, RoutesName.home);
-      }
+      setsignupLoading(false);
+      Utils.toastmessage("Sign up successful");
+      print(value.toString());
+      Navigator.pushNamed(context, RoutesName.home);
     }).onError((error, stackTrace) {
-      if (kDebugMode) {
-        setsignupLoading(false);
-        Utils.flushBarErrorMessage(error.toString(), context);
-        print(error.toString());
-      }
+      setsignupLoading(false);
+      Utils.flushBarErrorMessage(error.toString(), context);
+      print(error.toString());
     });
   }
 }
