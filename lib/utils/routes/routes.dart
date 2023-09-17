@@ -4,12 +4,17 @@ import 'package:mvvm_architecture/view/home-screen.dart';
 import 'package:mvvm_architecture/view/login-view.dart';
 import 'package:mvvm_architecture/view/signup-view.dart';
 
+import '../../view/splash-view.dart';
+
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RoutesName.home:
         return MaterialPageRoute(
             builder: (BuildContext context) => const HomeScreen());
+      case RoutesName.splash:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const SplashScreen());
 
       case RoutesName.signup:
         return MaterialPageRoute(
